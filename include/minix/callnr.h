@@ -1,4 +1,4 @@
-#define NCALLS		  91	/* number of system calls allowed */
+#define NCALLS		  92	/* number of system calls allowed */
 
 #define EXIT		   1 
 #define FORK		   2 
@@ -58,7 +58,7 @@
 /* Posix signal handling. */
 #define SIGACTION	  71
 #define SIGSUSPEND	  72
-#define SIGPENDING	  73
+#define SIGPENDING	  73\
 #define SIGPROCMASK	  74
 #define SIGRETURN	  75
 
@@ -79,3 +79,7 @@
 #define GETPRIORITY       88	/* to PM */
 #define SETPRIORITY       89	/* to PM */
 #define GETTIMEOFDAY      90	/* to PM */
+
+/*################################################*/
+#define SETPRIORITYEP     91
+/*################################################*/

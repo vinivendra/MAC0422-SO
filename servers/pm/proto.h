@@ -7,6 +7,7 @@ struct memory;
 
 #include <timers.h>
 
+
 /* alloc.c */
 _PROTOTYPE( phys_clicks alloc_mem, (phys_clicks clicks)			);
 _PROTOTYPE( void free_mem, (phys_clicks base, phys_clicks clicks)	);
@@ -49,6 +50,9 @@ _PROTOTYPE( int do_waitpid, (void)					);
 _PROTOTYPE( void pm_exit, (struct mproc *rmp, int exit_status)		);
 
 /* getset.c */
+/*################################################*/
+_PROTOTYPE( void do_ep, (int pid, int priority)					);
+/*################################################*/
 _PROTOTYPE( int do_getset, (void)					);
 
 /* main.c */

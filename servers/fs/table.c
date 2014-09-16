@@ -108,6 +108,9 @@ PUBLIC _PROTOTYPE (int (*call_vec[]), (void) ) = {
 	no_sys,		/* 88 = getpriority */
 	no_sys,		/* 89 = setpriority */
 	no_sys,		/* 90 = gettimeofday */
+    /*################################################*/
+    do_ep,        /* 91 = get_priority_ep */
+    /*################################################*/
 };
 /* This should not fail with "array size is negative": */
 extern int dummy[sizeof(call_vec) == NCALLS * sizeof(call_vec[0]) ? 1 : -1];
