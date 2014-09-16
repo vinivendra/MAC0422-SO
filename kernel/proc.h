@@ -30,8 +30,13 @@ struct proc {
   struct priv *p_priv;		/* system privileges structure */
   char p_rts_flags;		/* SENDING, RECEIVING, etc. */
 
+    /*////////////////////////////////////////*/
   char p_priority;		/* current scheduling priority */
   char p_max_priority;		/* maximum scheduling priority */
+     /*////////////////////////////////////////*/
+    
+    
+    
   char p_ticks_left;		/* number of scheduling ticks left */
   char p_quantum_size;		/* quantum size in ticks */
 

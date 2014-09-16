@@ -10,6 +10,11 @@
 #include "../../kernel/proc.h"
 #include "../../kernel/ipc.h"
 
+/*################################################*/
+#include "../pm/mproc.h"
+/*################################################*/
+
+
 #define click_to_round_k(n) \
 	((unsigned) ((((unsigned long) (n) << CLICK_SHIFT) + 512) / 1024))
 
@@ -26,6 +31,69 @@ FORWARD _PROTOTYPE( char *p_rts_flags_str, (int flags)		);
 PUBLIC struct proc proc[NR_TASKS + NR_PROCS];
 PUBLIC struct priv priv[NR_SYS_PROCS];
 PUBLIC struct boot_image image[NR_BOOT_PROCS];
+
+/*################################################*/
+
+PUBLIC struct mproc mproc[NR_PROCS];
+
+/*===========================================================================*
+ *				dmp_ep				     *
+ *===========================================================================*/
+
+PUBLIC void dmp_ep() {
+    
+    register struct proc *rp;
+    static struct proc *oldrp = BEG_PROC_ADDR;
+    int r, n = 0;
+    
+    struct mproc *mp;
+    getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc);
+
+    
+    /* First obtain a fresh copy of the current process and system table. */
+    if ((r = sys_getprivtab(priv)) != OK) {
+        report("IS","warning: couldn't get copy of system privileges table", r);
+        return;
+    }
+    if ((r = sys_getproctab(proc)) != OK) {
+        report("IS","warning: couldn't get copy of process table", r);
+        return;
+    }
+
+    printf("\n--PID-------Priority--CPU Time--Sys Time--SP--------\n");
+    for (rp = oldrp; rp < END_PROC_ADDR; rp++) {
+        if (isemptyp(rp)) continue;
+        if (++n > 23) break;
+        
+        mp = &mproc[rp->p_nr];
+        
+        printf("  %4d      %02u / %02u   %6u    %6u    %7x\n",
+               mp->mp_pid,
+               rp->p_priority, rp->p_max_priority,
+               rp->p_user_time + rp->p_sys_time, rp->p_sys_time,
+               rp->p_reg.sp);
+    }
+
+    if (rp == END_PROC_ADDR) rp = BEG_PROC_ADDR; else printf("--Press F4 to print more--\r");
+    oldrp = rp;
+
+    
+
+    
+}
+/*############################################### */
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*===========================================================================*
  *				timing_dmp				     *
