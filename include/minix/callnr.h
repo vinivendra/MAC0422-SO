@@ -58,7 +58,7 @@
 /* Posix signal handling. */
 #define SIGACTION	  71
 #define SIGSUSPEND	  72
-#define SIGPENDING	  73\
+#define SIGPENDING	  73
 #define SIGPROCMASK	  74
 #define SIGRETURN	  75
 
