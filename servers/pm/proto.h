@@ -51,7 +51,7 @@ _PROTOTYPE( void pm_exit, (struct mproc *rmp, int exit_status)		);
 
 /* getset.c */
 /*################################################*/
-_PROTOTYPE( void do_ep, (int pid, int priority)					);
+_PROTOTYPE( int do_ep, (void)					);
 /*################################################*/
 _PROTOTYPE( int do_getset, (void)					);
 
@@ -98,7 +98,7 @@ _PROTOTYPE( int do_gettimeofday, (void)					);
 _PROTOTYPE( void pm_set_timer, (timer_t *tp, int delta, 
 	tmr_func_t watchdog, int arg));
 _PROTOTYPE( void pm_expire_timers, (clock_t now));
-_PROTOTYPE( void pm_cancel_timer, (timer_t *tp));
+_PROTOTYPE( void pm_exit_cancel_timer, (timer_t *tp));
 
 /* trace.c */
 _PROTOTYPE( int do_trace, (void)					);

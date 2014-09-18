@@ -17,9 +17,7 @@
  *===========================================================================*/
 
 
-PUBLIC void do_setpriorityep(pid, priority)
-int pid;
-int priority;
+PUBLIC int do_ep()
 {
     
     printf("HUEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
