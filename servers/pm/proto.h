@@ -51,7 +51,7 @@ _PROTOTYPE( void pm_exit, (struct mproc *rmp, int exit_status)		);
 
 /* getset.c */
 /*################################################*/
-_PROTOTYPE( int do_ep, (void)					);
+_PROTOTYPE( int do_setpriority_ep, (void)					);
 /*################################################*/
 _PROTOTYPE( int do_getset, (void)					);
 

@@ -17,10 +17,11 @@
  *===========================================================================*/
 
 
-PUBLIC int do_ep()
+PUBLIC int do_setpriority_ep()
 {
     
-    printf("HUEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
+    
+    return(OK);
     
 }
 
