@@ -43,25 +43,60 @@ PUBLIC struct mproc mproc[NR_PROCS];
 PUBLIC void dmp_ep() {
     
     register struct proc *rp;
-    static struct proc *oldrp = BEG_PROC_ADDR;
-    int r, n = 0;
     
+    static struct proc** vetor =  NULL;
+    int r, n = 0, j, j2, minj;
+    static int oldj = 0;
+    static int tam;
     struct mproc *mp;
-    getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc);
 
-    
-    /* First obtain a fresh copy of the current process and system table. */
-    if ((r = sys_getprivtab(priv)) != OK) {
-        report("IS","warning: couldn't get copy of system privileges table", r);
-        return;
-    }
-    if ((r = sys_getproctab(proc)) != OK) {
+     if ((r = sys_getproctab(proc)) != OK) {
         report("IS","warning: couldn't get copy of process table", r);
         return;
     }
 
+
+
+    /*
+      Vetor onde manteremos os processos ordenados pela prioridade.
+      Usando insertion sort por simplicidade, não muito preocupado com
+      eficiência (imaginamos que o número de processos nunca seja muito
+      grande no nosso caso)
+    */
+    if(!vetor)
+    {
+      for(rp = BEG_PROC_ADDR; rp < END_PROC_ADDR; rp++, tam++);
+      vetor = malloc(tam*sizeof(struct proc*));
+      for(j = 0, rp = BEG_PROC_ADDR; rp < END_PROC_ADDR; rp++, j++)
+          vetor[j] = rp;
+      for(j = 0; j < tam; j++)
+      {
+        minj = j;
+        for(j2 = j; j2 < tam; j2++)
+          if(vetor[j2]->p_priority < vetor[minj]->p_priority)
+            minj = j2;
+        rp = vetor[j];
+        vetor[j] = vetor[minj];
+        vetor[minj] = rp;
+      }
+    }
+
+
+    
+    
+    getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc);
+
+    
+    /* First obtain a fresh copy of the current process and system table. */
+   /* if ((r = sys_getprivtab(priv)) != OK) {
+        report("IS","warning: couldn't get copy of system privileges table", r);
+        return;
+    }*/
+   
+
     printf("\n--PID-------Priority--CPU Time--Sys Time--SP--------\n");
-    for (rp = oldrp; rp < END_PROC_ADDR; rp++) {
+    for (j = oldj; j < tam; j++) {
+        rp = vetor[j];
         if (isemptyp(rp)) continue;
         if (++n > 23) break;
         
@@ -74,8 +109,13 @@ PUBLIC void dmp_ep() {
                rp->p_reg.sp);
     }
 
-    if (rp == END_PROC_ADDR) rp = BEG_PROC_ADDR; else printf("--Press F4 to print more--\r");
-    oldrp = rp;
+    if (j >= tam){
+     j = 0;
+     free(vetor);
+     vetor = NULL;
+     tam = 0;
+    } else printf("--Press F4 to print more--\r");
+    oldj = j;
 
     
 
