@@ -35,13 +35,18 @@ PUBLIC int do_setpriority_ep()
 	if(&mproc[armp->mp_parent] != rmp)
 		return -2; /*Alvo não é processo filho de rmp*/
 
+	printf("Passou todas as verificações da syscall\n");
+
 	/* Tenta pedir para o System Task mudar a prioridade
 		do processo alvo. */
 	if(!(resu = sys_nice(a_nr, novapri)))
 	{ /*Deu tudo certo*/
+		printf("Deu tudo certo (%d)\n", novapri);
 		return novapri;
 	}
-	else return -1; /* Número de processo inválido ou
+	else{
+		printf("Resu: %d\n", resu);
+		return -1;} /* Número de processo inválido ou
 						prioridade não é prioridade
 						de usuario */
 
