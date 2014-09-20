@@ -102,9 +102,9 @@ PUBLIC void dmp_ep() {
         
         mp = &mproc[rp->p_nr];
         
-        printf("  %4d      %02u / %02u   %6u    %6u    %7x\n",
+        printf("  %4d      %02d /%02u / %02u   %6u    %6u    %7x\n",
                mp->mp_pid,
-               rp->p_priority, rp->p_max_priority,
+               mp->mp_nice ,rp->p_priority, rp->p_max_priority,
                rp->p_user_time + rp->p_sys_time, rp->p_sys_time,
                rp->p_reg.sp);
     }

@@ -8,8 +8,12 @@ int procid;
 int procpri;
 {
 	message m;
+	/*Popula a mensagem com os argumentos*/
 
-  return(_syscall(MM, SETPRIORITYEP, &m));
+	m.m1_i1 = procid;
+	m.m1_i2 = procpri;
+
+	return(_syscall(MM, SETPRIORITYEP, &m));
 }
 
 /* ################################################ */

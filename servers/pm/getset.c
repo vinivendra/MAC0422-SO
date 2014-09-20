@@ -19,9 +19,37 @@
 
 PUBLIC int do_setpriority_ep()
 {
+	register struct mproc *armp;
+	int a_nr, resu;
+
+	/* Ponteiro para o processo atual*/
+	register struct mproc *rmp = mp;
+
+	/* Parametros da mensagem...*/
+	int alvoid = m_in.m1_i1;
+	int novapri = m_in.m1_i2;
+
+	if((a_nr = proc_from_pid(alvoid)) == -1)
+		return -1; /*PID passado é inválido*/
+	armp = &mproc[a_nr];
+	if(&mproc[armp->mp_parent] != rmp)
+		return -2; /*Alvo não é processo filho de rmp*/
+
+	/* Tenta pedir para o System Task mudar a prioridade
+		do processo alvo. */
+	if(!(resu = sys_nice(a_nr, novapri)))
+	{ /*Deu tudo certo*/
+		return novapri;
+	}
+	else return -1; /* Número de processo inválido ou
+						prioridade não é prioridade
+						de usuario */
+
+
+
+
     
-    
-    return(OK);
+
     
 }
 
