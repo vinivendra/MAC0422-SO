@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc} %Deixa eu colocar letras com ascentos
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{graphicx}
+
+
+\title{Relatório - EP Fase 4 \\ Laboratório de Programação 2}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section{Integrantes}
+
+\begin{itemize}
+
+\item Victor Sanches Portella - Nº USP: 7991152
+
+\item Vinícius Vendramini - Nº USP: XXXXXXX
+
+
+
+\end{itemize}
+
+\section{Parte 1}
+
+!!!!
+
+
+\section{Parte 2}
+
+Para fazer a parte 2, criamos uma System Call chamada \textbf(setpriority\_ep(pid, 
+pri)), onde \textbf{pid} e textbf{pri} são inteiros representando respectivamente
+o pid do processo alvo e a nova prioridade desse processo.
+
+Essa System Call cria uma mensagem, que é enviada para o Process Manager, que chama
+a função \textbf{do\_setpriority\_ep()}. Lá verificamos se o processo chamador é 
+pai do processo alvo, além de testar se o PID passado é de fato válido. Caso 
+passe nos dois testes, chamamos a Kernel Call \textbf{sys\_nice}, que enviará uma
+mensagem para o System Task. Lá será verificado se a prioridade passada é válida,
+!!!!!!além de alguns outros testes de segurança!!!!!!.
+
+Caso não haja nenhum problema, a prioridade é mudada na table de processos do
+Kernel, e o processo é mudado de fila de prioridade.
+
+É importante notar que a prioridade \textbf{pri} passada é um número entre -20 e 20, 
+não representando a real fila para a qual o processo será re-alocado. Quanto mais alto 
+for \textbf{pri}, maior será a prioridade do processo. Dado esse número, o \textbf{sys\_nice} faz uma conta para ter uma equivalência com relação ao número da fila
+que o processo deveria ir. Aqui fizemos uma tabela mostrando e qual fila o processo será
+realocado para cada valor de \textbf{pri}.
+
+!!!!Falta tabela!!!!!
+
+\section{Teste}
+
+
+
+\end{document}
