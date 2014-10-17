@@ -22,10 +22,10 @@ PUBLIC int do_nice(message *m_ptr)
 
   /* Extract the message parameters and do sanity checking. */
   proc_nr = m_ptr->PR_PROC_NR;
-  if (!isokprocn(proc_nr)) return(41);
-  if (iskerneln(proc_nr)) return(42);
+  if (!isokprocn(proc_nr)) return(EINVAL);
+  if (iskerneln(proc_nr)) return(EPERM);
   pri = m_ptr->PR_PRIORITY;
-  if (pri < PRIO_MIN || pri > PRIO_MAX) return(43);
+  if (pri < PRIO_MIN || pri > PRIO_MAX) return(EINVAL);
 
   /* The priority is currently between PRIO_MIN and PRIO_MAX. We have to
    * scale this between MIN_USER_Q and MAX_USER_Q.

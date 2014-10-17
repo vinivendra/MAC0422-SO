@@ -21,7 +21,7 @@
 
 \item Victor Sanches Portella - Nº USP: 7991152
 
-\item Vinícius Vendramini - Nº USP: XXXXXXX
+\item Vinícius Jorge Vendramini - Nº USP: 7991103
 
 
 
@@ -29,24 +29,35 @@
 
 \section{Parte 1}
 
-!!!!
+Para a primeira parte do EP criamos uma função \textbf{dmp\_ep} no arquivo \textit{dmp\_kernel.c}, onde ficava inicialmente a implementação da função chamada pelo \textbf{F4}. O funcionamento da função é simples e similar às outras funções de dump. São criados um vetor de processos e alguns contadores (estáticos, para possibilitar a paginação). Esse vetor é então ordenado pela prioridade e serve de fonte de dados para as impressões seguintes. As informações são tiradas então tanto do próprio vetor (vindo da tabela proc) quanto de uma outra tabela (a mproc) e impressas de acordo.
 
 
 \section{Parte 2}
 
 Para fazer a parte 2, criamos uma System Call chamada \textbf(setpriority\_ep(pid, 
-pri)), onde \textbf{pid} e textbf{pri} são inteiros representando respectivamente
+pri)), onde \textbf{pid} e \textbf{pri} são inteiros representando respectivamente
 o pid do processo alvo e a nova prioridade desse processo.
 
 Essa System Call cria uma mensagem, que é enviada para o Process Manager, que chama
 a função \textbf{do\_setpriority\_ep()}. Lá verificamos se o processo chamador é 
-pai do processo alvo, além de testar se o PID passado é de fato válido. Caso 
-passe nos dois testes, chamamos a Kernel Call \textbf{sys\_nice}, que enviará uma
-mensagem para o System Task. Lá será verificado se a prioridade passada é válida,
-!!!!!!além de alguns outros testes de segurança!!!!!!.
+pai do processo alvo, além de testar se o PID passado é de fato válido e se a prioridade dada como argumento é prioridade de usuário. Caso passe nos dois testes, chamamos a Kernel Call \textbf{sys\_nice}, que enviará uma mensagem para o System Task. Lá será verificado se a prioridade passada é válida,
 
-Caso não haja nenhum problema, a prioridade é mudada na table de processos do
+Caso não haja nenhum problema, a prioridade é mudada na tabela de processos do
 Kernel, e o processo é mudado de fila de prioridade.
+
+Valores de retorno possíveis da system call:\footnote{Não seguimos o padrão do enunciado pois tivemos problemas ao tentar fazer a função retornar valor negativo, além de que ficaria ambíguo em determinados casos.}
+
+\begin{itemize}
+
+	\item \textbf{Retorno 0:} Tudo ocorreu bem.
+
+	\item \textbf{Retorno -1:} Prioridade inválida.
+
+	\item \textbf{Retorno 1:} PID inválido ou o processo alvo não pode ter a prioridade alterada.
+
+	\item \textbf{Retorno 2:} Processo alvo não é filho do processo chamador.
+
+\end{itemize}
 
 É importante notar que a prioridade \textbf{pri} passada é um número entre -20 e 20, 
 não representando a real fila para a qual o processo será re-alocado. Quanto mais alto 
@@ -54,9 +65,17 @@ for \textbf{pri}, maior será a prioridade do processo. Dado esse número, o \te
 que o processo deveria ir. Aqui fizemos uma tabela mostrando e qual fila o processo será
 realocado para cada valor de \textbf{pri}.
 
-!!!!Falta tabela!!!!!
 
 \section{Teste}
+
+Nossa imagem do MINIX tem senha no root. Para acessar, use:
+
+\begin{itemize}
+	\item \textbf{Login:} root
+	\item \textbf{Senha:} senha
+\end{itemize}
+
+No endereço \textbf{/usr/src/EP2-testes} temos os arquivos de teste para verificar o funcionamento de nossa chamada ao sistema. 
 
 
 

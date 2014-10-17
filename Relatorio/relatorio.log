@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.14)  21 SEP 2014 22:01
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.14)  23 SEP 2014 00:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -448,23 +448,25 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 2970 strings out of 495007
- 37497 string characters out of 6180696
+ 2985 strings out of 495007
+ 37650 string characters out of 6180696
  100616 words of memory out of 5000000
- 6135 multiletter control sequences out of 15000+600000
- 13581 words of font info for 37 fonts, out of 8000000 for 9000
+ 6143 multiletter control sequences out of 15000+600000
+ 17165 words of font info for 45 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 37i,6n,23p,235b,197s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,8n,23p,643b,197s stack positions out of 5000i,500n,10000p,200000b,80000s
  </
-tmp/texfonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </tmp/texfonts/pk/ljfour/jkn
-appen/ec/ecrm0800.600pk> </tmp/texfonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> <
-/tmp/texfonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </tmp/texfonts/pk/ljfour/jk
-nappen/ec/ecrm1200.600pk> </tmp/texfonts/pk/ljfour/jknappen/ec/ecrm1728.600pk><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on relatorio.pdf (2 pages, 49597 bytes).
+tmp/texfonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </tmp/texfonts/pk/ljfour/jkn
+appen/ec/ecrm0600.600pk> </tmp/texfonts/pk/ljfour/jknappen/ec/ecti1095.600pk> <
+/tmp/texfonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </tmp/texfonts/pk/ljfour/jk
+nappen/ec/ecrm0800.600pk> </tmp/texfonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> 
+</tmp/texfonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </tmp/texfonts/pk/ljfour/j
+knappen/ec/ecrm1200.600pk> </tmp/texfonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on relatorio.pdf (2 pages, 68230 bytes).
 PDF statistics:
- 168 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+ 242 PDF objects out of 1000 (max. 8388607)
+ 45 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

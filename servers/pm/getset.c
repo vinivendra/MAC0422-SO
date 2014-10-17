@@ -9,6 +9,7 @@
 #include <signal.h>
 #include "mproc.h"
 #include "param.h"
+#include <sys/resource.h> /*Priomin, priomax, etc */
 
 
 /*################################################*/
@@ -29,31 +30,28 @@ PUBLIC int do_setpriority_ep()
 	int alvoid = m_in.m1_i1;
 	int novapri = m_in.m1_i2;
 
+
+	/*Verifica se a prioridade é valida */ 
+	if (novapri < PRIO_MIN || novapri > PRIO_MAX) return -1;
+
 	if((a_nr = proc_from_pid(alvoid)) == -1)
-		return -1; /*PID passado é inválido*/
+		return 1; /*PID passado é invalido*/
 	armp = &mproc[a_nr];
 	if(&mproc[armp->mp_parent] != rmp)
-		return -2; /*Alvo não é processo filho de rmp*/
+		return 2; /*Alvo nao eh processo filho de rmp*/
 
-	printf("Passou todas as verificações da syscall\n");
+	
 
 	/* Tenta pedir para o System Task mudar a prioridade
 		do processo alvo. */
 	if(!(resu = sys_nice(a_nr, novapri)))
 	{ /*Deu tudo certo*/
-		printf("Deu tudo certo (%d)\n", novapri);
-		return novapri;
+		
+		return 0;
 	}
-	else{
-		printf("Resu: %d\n", resu);
-		return -1;} /* Número de processo inválido ou
-						prioridade não é prioridade
-						de usuario */
-
-
-
-
-    
+	else return 1; /*PID passado é ínválido ou não pod
+					e ter a prioridade modificada*/
+	    
 
     
 }
