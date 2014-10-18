@@ -23,6 +23,7 @@ _PROTOTYPE( void timing_dmp, (void)					);
 
 /* dmp_pm.c */
 _PROTOTYPE( void mproc_dmp, (void)					);
+_PROTOTYPE( void memorymap_ep, (void)					);
 _PROTOTYPE( void sigaction_dmp, (void)					);
 
 /* dmp_fs.c */

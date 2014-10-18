@@ -36,6 +36,43 @@ PRIVATE char *flags_str(int flags)
 	return str;
 }
 
+/* ######################################## */
+
+PUBLIC void memorymap_ep()
+{
+  struct mproc *mp;
+  int i, j, n=0;
+  static int prev_i = 0, prev_j = 0;
+
+  printf("Process manager (PM) memory dump\n");
+
+  getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc);
+
+  printf("-pid-\t-p_ini-\t-p_end-\n");
+  for (i=prev_i; i<NR_PROCS; i++) {
+    mp = &mproc[i];
+    if (mp->mp_pid == 0 && i != PM_PROC_NR) continue;
+    if (++n > 22) break;
+    n++;
+    printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[D].mem_phys,
+         mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len);
+
+
+    if(mp->mp_flags & SEPARATE)
+      printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[T].mem_phys,
+         mp->mp_seg[T].mem_phys+mp->mp_seg[T].mem_len);
+
+      
+  }
+  if (i >= NR_PROCS) i = 0;
+  else printf("--more--\r");
+  prev_i = i;
+  prev_j = j;
+}
+
+
+/* ####################################### */
+
 PUBLIC void mproc_dmp()
 {
   struct mproc *mp;
