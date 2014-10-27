@@ -126,6 +126,9 @@ _PROTOTYPE( int setuid, (_mnx_Uid_t _uid)				);
 /* ################################################# */
 _PROTOTYPE( int setpriority_ep, (int procid, int procpri)				);
 /* ################################################# */
+/* ################################################# */
+_PROTOTYPE( int setpriority_ep2, (int procid, int procpri)				);
+/* ################################################# */
 _PROTOTYPE( unsigned int sleep, (unsigned int _seconds)			);
 _PROTOTYPE( long sysconf, (int _name)					);
 _PROTOTYPE( pid_t tcgetpgrp, (int _fd)					);

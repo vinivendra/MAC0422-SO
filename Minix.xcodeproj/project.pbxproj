@@ -7,35 +7,37 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		2430172319C8554B00DCC2F5 /* SOEP2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = SOEP2.pdf; sourceTree = "<group>"; };
-		246DB05919C72AD400C592A4 /* minix */ = {isa = PBXFileReference; lastKnownFileType = folder; name = minix; sourceTree = "<group>"; };
+		244513F919FD9B8400FBF903 /* SO */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SO; sourceTree = "<group>"; };
+		244513FA19FDA02300FBF903 /* _setpriority_ep2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = _setpriority_ep2.c; path = lib/posix/_setpriority_ep2.c; sourceTree = "<group>"; };
+		244513FB19FDA07A00FBF903 /* setpriority_ep2.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = setpriority_ep2.s; path = lib/syscall/setpriority_ep2.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		246DB05219C72A9E00C592A4 = {
+		244513F219FD9B0700FBF903 = {
 			isa = PBXGroup;
 			children = (
-				2430172319C8554B00DCC2F5 /* SOEP2.pdf */,
-				246DB05919C72AD400C592A4 /* minix */,
+				244513FA19FDA02300FBF903 /* _setpriority_ep2.c */,
+				244513FB19FDA07A00FBF903 /* setpriority_ep2.s */,
+				244513F919FD9B8400FBF903 /* SO */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXProject section */
-		246DB05319C72A9E00C592A4 /* Project object */ = {
+		244513F319FD9B0700FBF903 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 			};
-			buildConfigurationList = 246DB05619C72A9E00C592A4 /* Build configuration list for PBXProject "Minix" */;
+			buildConfigurationList = 244513F619FD9B0700FBF903 /* Build configuration list for PBXProject "Minix" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 246DB05219C72A9E00C592A4;
+			mainGroup = 244513F219FD9B0700FBF903;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -44,13 +46,13 @@
 /* End PBXProject section */
 
 /* Begin XCBuildConfiguration section */
-		246DB05719C72A9E00C592A4 /* Debug */ = {
+		244513F719FD9B0700FBF903 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
 			name = Debug;
 		};
-		246DB05819C72A9E00C592A4 /* Release */ = {
+		244513F819FD9B0700FBF903 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
@@ -59,16 +61,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		246DB05619C72A9E00C592A4 /* Build configuration list for PBXProject "Minix" */ = {
+		244513F619FD9B0700FBF903 /* Build configuration list for PBXProject "Minix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				246DB05719C72A9E00C592A4 /* Debug */,
-				246DB05819C72A9E00C592A4 /* Release */,
+				244513F719FD9B0700FBF903 /* Debug */,
+				244513F819FD9B0700FBF903 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 246DB05319C72A9E00C592A4 /* Project object */;
+	rootObject = 244513F319FD9B0700FBF903 /* Project object */;
 }
