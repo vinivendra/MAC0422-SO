@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		244513F919FD9B8400FBF903 /* SO */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SO; sourceTree = "<group>"; };
 		244513FA19FDA02300FBF903 /* _setpriority_ep2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = _setpriority_ep2.c; path = lib/posix/_setpriority_ep2.c; sourceTree = "<group>"; };
 		244513FB19FDA07A00FBF903 /* setpriority_ep2.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = setpriority_ep2.s; path = lib/syscall/setpriority_ep2.s; sourceTree = "<group>"; };
+		2480F66D1A016FC4004AA416 /* SO */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SO; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		244513F219FD9B0700FBF903 = {
 			isa = PBXGroup;
 			children = (
+				2480F66D1A016FC4004AA416 /* SO */,
 				244513FA19FDA02300FBF903 /* _setpriority_ep2.c */,
 				244513FB19FDA07A00FBF903 /* setpriority_ep2.s */,
-				244513F919FD9B8400FBF903 /* SO */,
 			);
 			sourceTree = "<group>";
 		};

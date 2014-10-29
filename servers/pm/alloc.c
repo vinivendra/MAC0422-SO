@@ -58,6 +58,7 @@ FORWARD _PROTOTYPE( int swap_out, (void)				    );
 /*===========================================================================*
  *				alloc_mem				     *
  *===========================================================================*/
+
 PUBLIC phys_clicks alloc_mem(clicks)
 phys_clicks clicks;		/* amount of memory requested */
 {
@@ -93,6 +94,45 @@ phys_clicks clicks;		/* amount of memory requested */
   } while (swap_out());		/* try to swap some other process out */
   return(NO_MEM);
 }
+
+PUBLIC phys_clicks ep_alloc_mem_best_fit(clicks)
+phys_clicks clicks;		/* amount of memory requested */
+{
+    /* Allocate a block of memory from the free list using first fit. The block
+     * consists of a sequence of contiguous bytes, whose length in clicks is
+     * given by 'clicks'.  A pointer to the block is returned.  The block is
+     * always on a click boundary.  This procedure is called when memory is
+     * needed for FORK or EXEC.  Swap other processes out if needed.
+     */
+    register struct hole *hp, *prev_ptr;
+    phys_clicks old_base;
+    
+    printf("BEST FIT AEAEAEAEAE\n\n");
+    
+    do {
+        prev_ptr = NIL_HOLE;
+        hp = hole_head;
+        while (hp != NIL_HOLE && hp->h_base < swap_base) {
+            if (hp->h_len >= clicks) {
+                /* We found a hole that is big enough.  Use it. */
+                old_base = hp->h_base;	/* remember where it started */
+                hp->h_base += clicks;	/* bite a piece off */
+                hp->h_len -= clicks;	/* ditto */
+                
+                /* Delete the hole if used up completely. */
+                if (hp->h_len == 0) del_slot(prev_ptr, hp);
+                
+                /* Return the start address of the acquired block. */
+                return(old_base);
+            }
+            
+            prev_ptr = hp;
+            hp = hp->h_next;
+        }
+    } while (swap_out());		/* try to swap some other process out */
+    return(NO_MEM);
+}
+
 
 /*===========================================================================*
  *				free_mem				     *
@@ -344,25 +384,48 @@ PUBLIC void swap_in()
 		/* Guess it got killed.  (Queue is cleaned here.) */
 		*pmp = rmp->mp_swapq;
 		continue;
-	} else
-	if ((new_base = alloc_mem(size)) == NO_MEM) {
-		/* No memory for this one, try the next. */
-		pmp = &rmp->mp_swapq;
-	} else {
-		/* We've found memory.  Update map and swap in. */
-		old_base = rmp->mp_seg[D].mem_phys;
-		rmp->mp_seg[D].mem_phys = new_base;
-		rmp->mp_seg[S].mem_phys = rmp->mp_seg[D].mem_phys + 
-			(rmp->mp_seg[S].mem_vir - rmp->mp_seg[D].mem_vir);
-		sys_newmap(proc_nr, rmp->mp_seg);
-		off = swap_offset + ((off_t) (old_base-swap_base)<<CLICK_SHIFT);
-		lseek(swap_fd, off, SEEK_SET);
-		rw_seg(0, swap_fd, proc_nr, D, (phys_bytes)size << CLICK_SHIFT);
-		free_mem(old_base, size);
-		rmp->mp_flags &= ~(ONSWAP|SWAPIN);
-		*pmp = rmp->mp_swapq;
-		check_pending(rmp);	/* a signal may have waked this one */
-	}
+    } else {
+        if (ep_uses_best_fit) {
+            if ((new_base = ep_alloc_mem_best_fit(size)) == NO_MEM) {
+                /* No memory for this one, try the next. */
+                pmp = &rmp->mp_swapq;
+            } else {
+                /* We've found memory.  Update map and swap in. */
+                old_base = rmp->mp_seg[D].mem_phys;
+                rmp->mp_seg[D].mem_phys = new_base;
+                rmp->mp_seg[S].mem_phys = rmp->mp_seg[D].mem_phys +
+                (rmp->mp_seg[S].mem_vir - rmp->mp_seg[D].mem_vir);
+                sys_newmap(proc_nr, rmp->mp_seg);
+                off = swap_offset + ((off_t) (old_base-swap_base)<<CLICK_SHIFT);
+                lseek(swap_fd, off, SEEK_SET);
+                rw_seg(0, swap_fd, proc_nr, D, (phys_bytes)size << CLICK_SHIFT);
+                free_mem(old_base, size);
+                rmp->mp_flags &= ~(ONSWAP|SWAPIN);
+                *pmp = rmp->mp_swapq;
+                check_pending(rmp);	/* a signal may have waked this one */
+            }
+        }
+        else {
+            if ((new_base = alloc_mem(size)) == NO_MEM) {
+                /* No memory for this one, try the next. */
+                pmp = &rmp->mp_swapq;
+            } else {
+                /* We've found memory.  Update map and swap in. */
+                old_base = rmp->mp_seg[D].mem_phys;
+                rmp->mp_seg[D].mem_phys = new_base;
+                rmp->mp_seg[S].mem_phys = rmp->mp_seg[D].mem_phys + 
+                    (rmp->mp_seg[S].mem_vir - rmp->mp_seg[D].mem_vir);
+                sys_newmap(proc_nr, rmp->mp_seg);
+                off = swap_offset + ((off_t) (old_base-swap_base)<<CLICK_SHIFT);
+                lseek(swap_fd, off, SEEK_SET);
+                rw_seg(0, swap_fd, proc_nr, D, (phys_bytes)size << CLICK_SHIFT);
+                free_mem(old_base, size);
+                rmp->mp_flags &= ~(ONSWAP|SWAPIN);
+                *pmp = rmp->mp_swapq;
+                check_pending(rmp);	/* a signal may have waked this one */
+            }
+        }
+    }
   }
 }
 

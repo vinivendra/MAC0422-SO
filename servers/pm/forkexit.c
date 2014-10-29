@@ -55,7 +55,14 @@ PUBLIC int do_fork()
   prog_clicks = (phys_clicks) rmp->mp_seg[S].mem_len;
   prog_clicks += (rmp->mp_seg[S].mem_vir - rmp->mp_seg[D].mem_vir);
   prog_bytes = (phys_bytes) prog_clicks << CLICK_SHIFT;
-  if ( (child_base = alloc_mem(prog_clicks)) == NO_MEM) return(ENOMEM);
+    
+    
+    if (ep_uses_best_fit) {
+        if ( (child_base = ep_alloc_mem_best_fit(prog_clicks)) == NO_MEM) return(ENOMEM);
+    }
+    else {
+        if ( (child_base = alloc_mem(prog_clicks)) == NO_MEM) return(ENOMEM);
+    }
 
   /* Create a copy of the parent's core image for the child. */
   child_abs = (phys_bytes) child_base << CLICK_SHIFT;

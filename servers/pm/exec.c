@@ -326,7 +326,13 @@ phys_bytes tot_bytes;		/* total memory to allocate, including gap */
   if ( (int) gap_clicks < 0) return(ENOMEM);
 
   /* Try to allocate memory for the new process. */
-  new_base = alloc_mem(text_clicks + tot_clicks);
+    
+    if (ep_uses_best_fit) {
+        new_base = ep_alloc_mem_best_fit(text_clicks + tot_clicks);
+    }
+    else {
+        new_base = alloc_mem(text_clicks + tot_clicks);
+    }
   if (new_base == NO_MEM) return(ENOMEM);
 
   /* We've got memory for the new core image.  Release the old one. */

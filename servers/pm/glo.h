@@ -20,3 +20,6 @@ extern char core_name[];	/* file name where core images are produced */
 EXTERN sigset_t core_sset;	/* which signals cause core images */
 EXTERN sigset_t ign_sset;	/* which signals are by default ignored */
 
+/*########################*/
+EXTERN int ep_uses_best_fit;
+/*########################*/
