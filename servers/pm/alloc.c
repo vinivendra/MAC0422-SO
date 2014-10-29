@@ -141,6 +141,28 @@ phys_clicks clicks;		/* number of clicks to free */
   merge(prev_ptr);		/* sequence is 'prev_ptr', 'new_ptr', 'hp' */
 }
 
+
+
+
+/* ############################################## */
+PUBLIC phys_clicks getFreeMemEP()
+{
+  register struct hole *hp;
+  phys_clicks total = 0;
+
+  hp = hole_head;
+  while (hp != NIL_HOLE && hp->h_base < swap_base) {     
+    total += hp->h_len;
+    hp = hp->h_next;
+  }
+
+  return total;
+ 
+}
+/* ############################################# */
+
+
+
 /*===========================================================================*
  *				del_slot				     *
  *===========================================================================*/

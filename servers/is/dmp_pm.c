@@ -42,11 +42,14 @@ PUBLIC void memorymap_ep()
 {
   struct mproc *mp;
   int i, j, n=0;
+  static phys_clicks usedClicks = 0, totalClicks = 0;
   static int prev_i = 0, prev_j = 0;
 
   printf("Process manager (PM) memory dump\n");
 
   getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc);
+  if(!totalClicks)
+    getsysinfo(PM_PROC_NR, SI_USU_MEM, &totalClicks);
 
   printf("-pid-\t-p_ini-\t-p_end-\n");
   for (i=prev_i; i<NR_PROCS; i++) {
@@ -56,15 +59,24 @@ PUBLIC void memorymap_ep()
     n++;
     printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[D].mem_phys,
          mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len);
+    usedClicks +=  mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len - mp->mp_seg[D].mem_phys;
 
 
     if(mp->mp_flags & SEPARATE)
+    {
       printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[T].mem_phys,
          mp->mp_seg[T].mem_phys+mp->mp_seg[T].mem_len);
+      usedClicks += mp->mp_seg[T].mem_len;
+    }
 
       
   }
-  if (i >= NR_PROCS) i = 0;
+  if (i >= NR_PROCS)
+  {
+    printf("Memoria livre: %u\n || Memoria usada: %u\n", totalClicks, usedClicks);
+    i = 0;
+    usedClicks = totalClicks = 0;
+  }
   else printf("--more--\r");
   prev_i = i;
   prev_j = j;

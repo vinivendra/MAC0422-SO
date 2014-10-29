@@ -56,6 +56,7 @@ PUBLIC int do_getsysinfo()
 {
   struct mproc *proc_addr;
   vir_bytes src_addr, dst_addr;
+  phys_clicks freeMem;
   struct kinfo kinfo;
   size_t len;
   int s;
@@ -74,6 +75,11 @@ PUBLIC int do_getsysinfo()
   case SI_PROC_TAB:			/* copy entire process table */
         src_addr = (vir_bytes) mproc;
         len = sizeof(struct mproc) * NR_PROCS;
+        break;
+  case SI_USU_MEM:  
+        freeMem = getFreeMemEP();      
+        src_addr = (vir_bytes) &freeMem;
+        len = sizeof(phys_clicks);
         break;
   default:
   	return(EINVAL);

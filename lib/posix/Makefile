@@ -299,7 +299,7 @@ $(LIBRARY)(_setpriority_ep.o):	_setpriority_ep.c
 ######################################
 
 $(LIBRARY)(_setpriority_ep2.o):	_setpriority_ep2.c
-$(CC1) _setpriority_ep2.c
+	$(CC1) _setpriority_ep2.c
 
 ######################################
 
