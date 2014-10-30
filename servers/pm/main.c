@@ -36,6 +36,9 @@ FORWARD _PROTOTYPE( void patch_mem_chunks, (struct memory *mem_chunks,
 #define click_to_round_k(n) \
 	((unsigned) ((((unsigned long) (n) << CLICK_SHIFT) + 512) / 1024))
 
+
+
+
 /*===========================================================================*
  *				main					     *
  *===========================================================================*/
