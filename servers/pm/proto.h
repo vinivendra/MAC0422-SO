@@ -55,7 +55,7 @@ _PROTOTYPE( void pm_exit, (struct mproc *rmp, int exit_status)		);
 _PROTOTYPE( int do_setpriority_ep, (void)					);
 /*################################################*/
 /*################################################*/
-_PROTOTYPE( int do_setpriority_ep2, (void)					);
+_PROTOTYPE( int do_set_best_fit_ep, (void)					);
 /*################################################*/
 _PROTOTYPE( int do_getset, (void)					);
 

@@ -1,7 +1,7 @@
 .sect .text
-.extern	__setpriority_ep2
-.define	_setpriority_ep2
+.extern	__set_best_fit_ep
+.define	_set_best_fit_ep
 .align 2
 
-_setpriority_ep2:
-	jmp	__setpriority_ep2
+_set_best_fit_ep:
+	jmp	__set_best_fit_ep

@@ -66,10 +66,18 @@ PUBLIC int do_setpriority_ep()
  *===========================================================================*/
 
 
-PUBLIC int do_setpriority_ep2()
+PUBLIC int do_set_best_fit_ep()
 {
     
+    int useBestFit = m_in.m1_i1;
+    
     printf("HUEEEEEEEEE\n");
+    
+    ep_uses_best_fit = useBestFit;
+    
+    printf("BEST FIT: %d\n", ep_uses_best_fit);
+    
+    printf("SUCEXO.\n");
     
     return 0;
 }

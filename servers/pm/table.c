@@ -111,7 +111,7 @@ _PROTOTYPE (int (*call_vec[NCALLS]), (void) ) = {
     do_setpriority_ep,        /* 91 = setpriority_ep */
     /*################################################*/
     /*################################################*/
-    do_setpriority_ep2,       /* 92 = setpriority_ep2 */
+    do_set_best_fit_ep,       /* 92 = set_best_fit_ep */
     /*################################################*/
 };
 /* This should not fail with "array size is negative": */

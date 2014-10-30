@@ -25,6 +25,8 @@
 #include "../../kernel/config.h"
 #include "../../kernel/type.h"
 
+#include <limits.h>
+
 #define NR_HOLES  (2*NR_PROCS)	/* max # entries in hole table */
 #define NIL_HOLE (struct hole *) 0
 
@@ -107,6 +109,10 @@ phys_clicks clicks;		/* amount of memory requested */
     register struct hole *hp, *prev_ptr;
     phys_clicks old_base;
     
+    phys_clicks bestClicks = UINT_MAX;
+    register struct hole *bestHp = NULL;
+    register struct hole *bestPrev = NULL;
+    
     printf("BEST FIT AEAEAEAEAE\n\n");
     
     do {
@@ -114,21 +120,30 @@ phys_clicks clicks;		/* amount of memory requested */
         hp = hole_head;
         while (hp != NIL_HOLE && hp->h_base < swap_base) {
             if (hp->h_len >= clicks) {
-                /* We found a hole that is big enough.  Use it. */
-                old_base = hp->h_base;	/* remember where it started */
-                hp->h_base += clicks;	/* bite a piece off */
-                hp->h_len -= clicks;	/* ditto */
-                
-                /* Delete the hole if used up completely. */
-                if (hp->h_len == 0) del_slot(prev_ptr, hp);
-                
-                /* Return the start address of the acquired block. */
-                return(old_base);
+                if (hp->h_len < bestClicks) {
+                    bestClicks = hp->h_len;
+                    bestHp = hp;
+                    bestPrev = prev_ptr;
+                }
             }
             
             prev_ptr = hp;
             hp = hp->h_next;
         }
+        
+        if (bestHp != NULL) {
+            /* We found a hole that is big enough.  Use it. */
+            old_base = bestHp->h_base;	/* remember where it started */
+            bestHp->h_base += clicks;	/* bite a piece off */
+            bestHp->h_len -= clicks;	/* ditto */
+            
+            /* Delete the hole if used up completely. */
+            if (bestHp->h_len == 0) del_slot(bestPrev, bestHp);
+            
+            /* Return the start address of the acquired block. */
+            return(old_base);
+        }
+
     } while (swap_out());		/* try to swap some other process out */
     return(NO_MEM);
 }
