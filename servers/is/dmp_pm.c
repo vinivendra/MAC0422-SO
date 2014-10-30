@@ -41,33 +41,80 @@ PRIVATE char *flags_str(int flags)
 PUBLIC void memorymap_ep()
 {
   struct mproc *mp;
-  int i, j, n=0;
+  int i, j,mini, n=0;
   static phys_clicks usedClicks = 0, totalClicks = 0;
-  static int prev_i = 0, prev_j = 0;
+  static int prev_i = 0, prev_j = 0, tam = 0;
+  static struct mproc **vetor = NULL;
 
   printf("Process manager (PM) memory dump\n");
+
+  if(!vetor)
+    {
+      tam = NR_PROCS;
+      vetor = malloc(tam*sizeof(struct mproc*));
+      for(i = 0; i<NR_PROCS; i++)
+          vetor[i] = &mproc[i];;
+      for(i = 0; i < tam; i++)
+      {
+        mini = i;
+        for(j = i; j < tam; j++)
+          if(vetor[j]->mp_seg[D].mem_phys < vetor[mini]->mp_seg[D].mem_phys)
+            mini = j;
+        mp = vetor[i];
+        vetor[i] = vetor[mini];
+        vetor[mini] = mp;
+      }
+    }
+
+
 
   getsysinfo(PM_PROC_NR, SI_PROC_TAB, mproc);
   if(!totalClicks)
     getsysinfo(PM_PROC_NR, SI_USU_MEM, &totalClicks);
 
   printf("-pid-\t-p_ini-\t-p_end-\n");
-  for (i=prev_i; i<NR_PROCS; i++) {
-    mp = &mproc[i];
+  for (i=prev_i; i<tam; i++) {
+    mp = vetor[i];
     if (mp->mp_pid == 0 && i != PM_PROC_NR) continue;
-    if (++n > 22) break;
-    n++;
-    printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[D].mem_phys,
-         mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len);
-    usedClicks +=  mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len - mp->mp_seg[D].mem_phys;
-
+    if (n > 20) break;
+    
 
     if(mp->mp_flags & SEPARATE)
     {
-      printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[T].mem_phys,
-         mp->mp_seg[T].mem_phys+mp->mp_seg[T].mem_len);
       usedClicks += mp->mp_seg[T].mem_len;
+      usedClicks +=  mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len -
+                        mp->mp_seg[D].mem_phys;
+      if(mp->mp_seg[T].mem_phys+mp->mp_seg[T].mem_len == 
+          mp->mp_seg[D].mem_phys)
+      {
+        n++;
+        /*Texto e data seguidos*/
+        printf("%d\t%u\t%u\n",mp->mp_pid, mp->mp_seg[T].mem_phys,  
+          mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len);
+      }
+      else
+      { n+=2;
+        printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[T].mem_phys,
+        mp->mp_seg[T].mem_phys+mp->mp_seg[T].mem_len);        
+        printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[D].mem_phys,
+        mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len);
+        
+
+      }
     }
+    else
+    {
+      n++;
+      printf("%d\t%u\t%u\n",mp->mp_pid , mp->mp_seg[D].mem_phys,
+        mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len);
+      usedClicks +=  mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len -
+                        mp->mp_seg[D].mem_phys;        
+    }
+
+    
+
+
+    
 
       
   }
@@ -76,6 +123,9 @@ PUBLIC void memorymap_ep()
     printf("Memoria livre: %u\n || Memoria usada: %u\n", totalClicks, usedClicks);
     i = 0;
     usedClicks = totalClicks = 0;
+    free(vetor);
+    vetor = NULL;
+    tam = 0;
   }
   else printf("--more--\r");
   prev_i = i;
