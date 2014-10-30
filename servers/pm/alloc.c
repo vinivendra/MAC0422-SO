@@ -25,7 +25,10 @@
 #include "../../kernel/config.h"
 #include "../../kernel/type.h"
 
+
+/*###################################*/
 #include <limits.h>
+/*###################################*/
 
 #define NR_HOLES  (2*NR_PROCS)	/* max # entries in hole table */
 #define NIL_HOLE (struct hole *) 0
@@ -97,6 +100,8 @@ phys_clicks clicks;		/* amount of memory requested */
   return(NO_MEM);
 }
 
+/*########################################################################*/
+
 PUBLIC phys_clicks ep_alloc_mem_best_fit(clicks)
 phys_clicks clicks;		/* amount of memory requested */
 {
@@ -148,6 +153,7 @@ phys_clicks clicks;		/* amount of memory requested */
     return(NO_MEM);
 }
 
+/*########################################################################*/
 
 /*===========================================================================*
  *				free_mem				     *

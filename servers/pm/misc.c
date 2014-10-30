@@ -30,12 +30,15 @@ PUBLIC int do_allocmem()
 
   mem_clicks = (m_in.memsize + CLICK_SIZE -1 ) >> CLICK_SHIFT;
     
+/*########################################################################*/
     if (ep_uses_best_fit) {
         mem_base = ep_alloc_mem_best_fit(mem_clicks);
     }
     else {
         mem_base = alloc_mem(mem_clicks);
     }
+/*########################################################################*/
+    
   if (mem_base == NO_MEM) return(ENOMEM);
   mp->mp_reply.membase =  (phys_bytes) (mem_base << CLICK_SHIFT);
   return(OK);

@@ -128,8 +128,6 @@ _PROTOTYPE( pid_t setsid, (void)					);
 _PROTOTYPE( int setuid, (_mnx_Uid_t _uid)				);
 /* ################################################# */
 _PROTOTYPE( int setpriority_ep, (int procid, int procpri)				);
-/* ################################################# */
-/* ################################################# */
 _PROTOTYPE( int set_best_fit_ep, (int should_use_best_fit)				);
 /* ################################################# */
 _PROTOTYPE( unsigned int sleep, (unsigned int _seconds)			);
