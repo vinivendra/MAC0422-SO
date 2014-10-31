@@ -132,6 +132,7 @@ phys_clicks clicks;		/* amount of memory requested */
                 }
             }
             
+            
             prev_ptr = hp;
             hp = hp->h_next;
         }
