@@ -53,7 +53,7 @@ PUBLIC void memorymap_ep()
       tam = NR_PROCS;
       vetor = malloc(tam*sizeof(struct mproc*));
       for(i = 0; i<NR_PROCS; i++)
-          vetor[i] = &mproc[i];;
+          vetor[i] = &mproc[i];
       for(i = 0; i < tam; i++)
       {
         mini = i;
