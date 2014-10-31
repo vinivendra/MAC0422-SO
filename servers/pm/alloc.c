@@ -60,6 +60,132 @@ FORWARD _PROTOTYPE( int swap_out, (void)				    );
 #define swap_out()	(0)
 #endif
 
+
+/*########################################################
+                        compacta_ep
+
+########################################################*/
+PUBLIC void compacta_ep()
+{
+  int i = 0, j = 0, type = 0, k = 0;
+  struct mproc *mp, *mp2;
+  phys_bytes novaBaseB, velhaBaseB, tamB;
+  phys_clicks novaBaseP, velhaBaseP, tamP, tamBuraco, textAdr;
+  register struct hole *hp, *anterior;
+
+  hp = hole_head;
+  while (hp != NIL_HOLE && hp->h_base < swap_base){
+    
+
+    type = 0;
+
+    for(i = 0; i < NR_PROCS; i++)
+      {
+        mp = &mproc[i];
+        if (mp->mp_pid == 0 && i != PM_PROC_NR) continue;
+
+        if (mp->mp_seg[D].mem_phys == hp->h_base + hp->h_len) {
+          type = 1;
+          break;    
+        }
+
+        if(mp->mp_flags & SEPARATE) { /* Se for separado */
+          if (mp->mp_seg[T].mem_phys == hp->h_base + hp->h_len) {
+            type = 2;
+            break;
+          }
+        }
+
+
+        
+      }    
+    
+    if (type == 0) {
+
+    anterior = hp;
+    hp = hp->h_next;
+      /* nao achou ninguem KENREL PANIC FODEU A VIDA */
+    }
+    else if (type == 1) { /* DATA */
+      novaBaseP = hp->h_base;
+      tamBuraco = hp->h_len;
+      tamP = mp->mp_seg[S].mem_phys+mp->mp_seg[S].mem_len -
+                        mp->mp_seg[D].mem_phys;
+      free_mem(mp->mp_seg[D].mem_phys, tamP);
+
+    
+
+      /* Pega o novo primeiro buraco e atualiza*/
+      hp->h_base += tamP; 
+      hp->h_len -= tamP;
+
+
+      /* Faz a cópia de fato*/
+      tamB = tamP << CLICK_SHIFT;
+      novaBaseB = novaBaseP << CLICK_SHIFT;
+      velhaBaseB = mp->mp_seg[D].mem_phys << CLICK_SHIFT;
+      sys_abscopy(velhaBaseB, novaBaseB, tamB);
+
+      /*Atualiza endereços nas tabelas de tudo */
+
+      mp->mp_seg[D].mem_phys = novaBaseP;
+      mp->mp_seg[S].mem_phys -= tamBuraco;
+
+      /*Avisa o kernel*/
+      sys_newmap(mp - mproc, mp->mp_seg);
+
+    }
+    else if (type == 2) { /* TEXT SEPARADO */
+      novaBaseP = hp->h_base;
+      tamBuraco = hp->h_len;
+      tamP = mp->mp_seg[T].mem_len;
+      free_mem(mp->mp_seg[T].mem_phys, tamP);
+
+  
+
+      /* Pega o novo primeiro buraco e atualiza*/
+      hp->h_base += tamP; 
+      hp->h_len -= tamP;
+
+      /* Faz a cópia de fato*/
+      tamB = tamP << CLICK_SHIFT;
+      novaBaseB = novaBaseP << CLICK_SHIFT;
+      velhaBaseB = mp->mp_seg[T].mem_phys << CLICK_SHIFT;
+      sys_abscopy(velhaBaseB, novaBaseB, tamB);
+
+      textAdr = mp->mp_seg[T].mem_phys;
+      /* Procura outros processos que tambem usam o mesmo texto */
+      for(k = 0; k < NR_PROCS; k++)
+      {
+        mp2 = &mproc[k];
+        if(mp2->mp_seg[T].mem_phys == textAdr)
+        {
+          mp2->mp_seg[T].mem_phys = novaBaseP;
+          sys_newmap(mp2 - mproc, mp2->mp_seg);
+        }
+      }
+    }
+    else {
+      /* wat */
+
+    anterior = hp;
+    hp = hp->h_next;
+
+    }
+
+
+
+
+  }
+
+}
+
+
+/*########################################################*/
+
+
+
+
 /*===========================================================================*
  *				alloc_mem				     *
  *===========================================================================*/
@@ -76,27 +202,36 @@ phys_clicks clicks;		/* amount of memory requested */
   register struct hole *hp, *prev_ptr;
   phys_clicks old_base;
 
-  do {
-        prev_ptr = NIL_HOLE;
-	hp = hole_head;
-	while (hp != NIL_HOLE && hp->h_base < swap_base) {
-		if (hp->h_len >= clicks) {
-			/* We found a hole that is big enough.  Use it. */
-			old_base = hp->h_base;	/* remember where it started */
-			hp->h_base += clicks;	/* bite a piece off */
-			hp->h_len -= clicks;	/* ditto */
+  /*#############################*/
+  int compactado = 0;
 
-			/* Delete the hole if used up completely. */
-			if (hp->h_len == 0) del_slot(prev_ptr, hp);
+  while(compactado <= 1)
+  {
+    do {
+          prev_ptr = NIL_HOLE;
+  	hp = hole_head;
+  	while (hp != NIL_HOLE && hp->h_base < swap_base) {
+  		if (hp->h_len >= clicks) {
+  			/* We found a hole that is big enough.  Use it. */
+  			old_base = hp->h_base;	/* remember where it started */
+  			hp->h_base += clicks;	/* bite a piece off */
+  			hp->h_len -= clicks;	/* ditto */
 
-			/* Return the start address of the acquired block. */
-			return(old_base);
-		}
+  			/* Delete the hole if used up completely. */
+  			if (hp->h_len == 0) del_slot(prev_ptr, hp);
 
-		prev_ptr = hp;
-		hp = hp->h_next;
-	}
-  } while (swap_out());		/* try to swap some other process out */
+  			/* Return the start address of the acquired block. */
+  			return(old_base);
+  		}
+
+  		prev_ptr = hp;
+  		hp = hp->h_next;
+  	}
+    } while (swap_out());		/* try to swap some other process out */
+    if(!compactado) compacta_ep();
+    compactado++;
+  }
+  /* ################################ */
   return(NO_MEM);
 }
 
@@ -117,8 +252,6 @@ phys_clicks clicks;		/* amount of memory requested */
     phys_clicks bestClicks = UINT_MAX;
     register struct hole *bestHp = NULL;
     register struct hole *bestPrev = NULL;
-    
-    printf("BEST FIT AEAEAEAEAE\n\n");
     
     do {
         prev_ptr = NIL_HOLE;

@@ -11,6 +11,7 @@ struct memory;
 /* alloc.c */
 /* ###################*/
 _PROTOTYPE( phys_clicks getFreeMemEP, (void)			);
+_PROTOTYPE( void compacta_ep, (void)			);
 /*##################### */
 _PROTOTYPE( phys_clicks alloc_mem, (phys_clicks clicks)			);
 _PROTOTYPE( phys_clicks ep_alloc_mem_best_fit, (phys_clicks clicks)			);

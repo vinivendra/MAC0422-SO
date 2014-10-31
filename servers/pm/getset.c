@@ -58,21 +58,20 @@ PUBLIC int do_setpriority_ep()
 
 /*===========================================================================*
  *				set_best_fit_ep 			     *
+ arg = 0 => First Fit
+ arg = 1 => Best Fit
+ arg = 2 => Compacta a memória
  *===========================================================================*/
 
 
 PUBLIC int do_set_best_fit_ep()
 {
     
-    int useBestFit = m_in.m1_i1;
+    int arg = m_in.m1_i1;
+   
     
-    printf("HUEEEEEEEEE\n");
-    
-    ep_uses_best_fit = useBestFit;
-    
-    printf("BEST FIT: %d\n", ep_uses_best_fit);
-    
-    printf("SUCEXO.\n");
+    if(arg < 2) ep_uses_best_fit = arg;
+    else compacta_ep();
     
     return 0;
 }
