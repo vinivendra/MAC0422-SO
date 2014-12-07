@@ -37,6 +37,8 @@
 
     A terceira parte está quase toda no dmp\_pm.c. Ela envolve uma função que copia e ordena a tabela de processos, pega as informações restantes necessárias através de uma chamada getsysinfo e então imprime as informações do processo necessárias, seguidas das informações de memória. As implementações referentes à chamada getsysinfo e aos pedidos de informações de memória estão principalmente no alloc.c e no misc.c.
 
+    É necessário imprimir a tabela duas vezes para que ela possa ser ordenada. Na primeira vez, ela será impressa fora de ordem; dali em diante, estará sempre em ordem.
+
 
     \subsection*{Observações}
     Apenas para fins de testes, criamos uma outra condição na chamada de sistema (ep\_uses\_best\_fit). Como ela usava apenas valores 0 ou 1, pudemos usar quaisquer outros valores para executar uma chamada excepcional à função de compactação de memória. Assim, para testar essa função, basta chamar (por exemplo) ep\_uses\_best\_fit(3).
