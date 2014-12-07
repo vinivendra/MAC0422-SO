@@ -1,4 +1,4 @@
-#define NCALLS		  93	/* number of system calls allowed */
+#define NCALLS		  94	/* number of system calls allowed */
 
 #define EXIT		   1 
 #define FORK		   2 
@@ -83,5 +83,6 @@
 /*################################################*/
 #define SETPRIORITYEP     91
 #define SETBESTFITEP    92
+#define GETPROCINFOEP    93
 /*################################################*/
 

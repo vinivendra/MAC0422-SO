@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		24A48A891A34BFA900FF40DF /* _get_proc_info_ep.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = _get_proc_info_ep.c; sourceTree = "<group>"; };
+		24A48A8B1A34C00B00FF40DF /* get_proc_info_ep.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = get_proc_info_ep.s; sourceTree = "<group>"; };
 		24F19AD11A0249F700B6A87F /* a.out2com */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = a.out2com; sourceTree = "<group>"; };
 		24F19AD21A0249F700B6A87F /* addaout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = addaout.c; sourceTree = "<group>"; };
 		24F19AD31A0249F700B6A87F /* boot.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = boot.c; sourceTree = "<group>"; };
@@ -6536,6 +6538,7 @@
 				24F1A3D91A0249FB00B6A87F /* _fstat.c */,
 				24F1A3DA1A0249FB00B6A87F /* _fstatfs.c */,
 				24F1A3DB1A0249FB00B6A87F /* _fsync.c */,
+				24A48A891A34BFA900FF40DF /* _get_proc_info_ep.c */,
 				24F1A3DC1A0249FB00B6A87F /* _getcwd.c */,
 				24F1A3DD1A0249FB00B6A87F /* _getegid.c */,
 				24F1A3DE1A0249FB00B6A87F /* _geteuid.c */,
@@ -6567,9 +6570,9 @@
 				24F1A3F81A0249FB00B6A87F /* _rewinddir.c */,
 				24F1A3F91A0249FB00B6A87F /* _rmdir.c */,
 				24F1A3FA1A0249FB00B6A87F /* _select.c */,
+				24F1A87C1A024BCA00B6A87F /* _set_best_fit_ep.c */,
 				24F1A3FB1A0249FB00B6A87F /* _setgid.c */,
 				24F1A3FC1A0249FB00B6A87F /* _setpriority_ep.c */,
-				24F1A87C1A024BCA00B6A87F /* _set_best_fit_ep.c */,
 				24F1A3FE1A0249FB00B6A87F /* _setsid.c */,
 				24F1A3FF1A0249FB00B6A87F /* _setuid.c */,
 				24F1A4001A0249FB00B6A87F /* _sigaction.c */,
@@ -6736,6 +6739,7 @@
 				24F1A4891A0249FB00B6A87F /* freemem.s */,
 				24F1A48A1A0249FB00B6A87F /* fstat.s */,
 				24F1A48B1A0249FB00B6A87F /* fstatfs.s */,
+				24A48A8B1A34C00B00FF40DF /* get_proc_info_ep.s */,
 				24F1A48C1A0249FB00B6A87F /* getcwd.s */,
 				24F1A48D1A0249FB00B6A87F /* getegid.s */,
 				24F1A48E1A0249FB00B6A87F /* geteuid.s */,
@@ -6772,9 +6776,9 @@
 				24F1A4AD1A0249FB00B6A87F /* rmdir.s */,
 				24F1A4AE1A0249FB00B6A87F /* sbrk.s */,
 				24F1A4AF1A0249FB00B6A87F /* seekdir.s */,
+				24F1A4B21A0249FB00B6A87F /* set_best_fit_ep.s */,
 				24F1A4B01A0249FB00B6A87F /* setgid.s */,
 				24F1A4B11A0249FB00B6A87F /* setpriority_ep.s */,
-				24F1A4B21A0249FB00B6A87F /* set_best_fit_ep.s */,
 				24F1A4B31A0249FB00B6A87F /* setsid.s */,
 				24F1A4B41A0249FB00B6A87F /* setuid.s */,
 				24F1A4B51A0249FB00B6A87F /* sigaction.s */,

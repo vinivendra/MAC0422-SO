@@ -110,9 +110,8 @@ PUBLIC _PROTOTYPE (int (*call_vec[]), (void) ) = {
 	no_sys,		/* 90 = gettimeofday */
     /*################################################*/
     no_sys,        /* 91 = get_priority_ep, do PM, nao implementado no fs */
-    /*################################################*/
-    /*################################################*/
     no_sys,        /* 92 = get_priority_ep2, do PM, nao implementado no fs */
+    no_sys,        /* 93 = get_proc_info_ep, do PM, nao implementado no fs */    
     /*################################################*/
 };
 /* This should not fail with "array size is negative": */

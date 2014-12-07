@@ -68,10 +68,9 @@ OBJECTS	= \
 	$(LIBRARY)(_select.o) \
 	$(LIBRARY)(_setgid.o) \
 	$(LIBRARY)(_setsid.o) \
-#############################################
 	$(LIBRARY)(_setpriority_ep.o) \
 	$(LIBRARY)(_set_best_fit_ep.o) \
-#############################################
+	$(LIBRARY)(_get_proc_info_ep.o) \
 	$(LIBRARY)(_setuid.o) \
 	$(LIBRARY)(_sigaction.o) \
 	$(LIBRARY)(_sigpending.o) \
@@ -299,6 +298,9 @@ $(LIBRARY)(_setpriority_ep.o):	_setpriority_ep.c
 
 $(LIBRARY)(_set_best_fit_ep.o):	_set_best_fit_ep.c
 	$(CC1) _set_best_fit_ep.c
+
+$(LIBRARY)(_get_proc_info_ep.o):	_get_proc_info_ep.c
+	$(CC1) _get_proc_info_ep.c
 
 ######################################
 
