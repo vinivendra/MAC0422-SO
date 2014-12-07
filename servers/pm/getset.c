@@ -60,15 +60,18 @@ PUBLIC int do_setpriority_ep()
  *				set_best_fit_ep 			     *
  arg = 0 => First Fit
  arg = 1 => Best Fit
- arg = 2 => Compacta a memória
+ c.c. => Compacta a memória
  *===========================================================================*/
 
 
 PUBLIC int do_set_best_fit_ep()
 {
-    
+	register struct mproc *rmp = mp;    
     int arg = m_in.m1_i1;
    
+   /*Só o root pode fazer isso */
+   	if(rmp->mp_effuid != SUPER_USER)
+			return(EPERM);
     
     if(arg < 2) ep_uses_best_fit = arg;
     else compacta_ep();
