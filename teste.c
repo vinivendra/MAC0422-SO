@@ -1,31 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 
+int main (int argc, char **argv) {
 
-int main(int argc, char** argv)
-{
-	int fid, novaPri;
+    char *hue = "/usr/src/EP4-Testes/arquivoNovo.c";
 
-	if(argc < 2){
-		printf("Modo de uso: %s novaPrioridade\n", argv[0]);
-		return 0;
-	}
+    int result = 1337;
 
-	novaPri = atoi(argv[1]);
+    result = lsr(hue);
 
-	if(fid = fork())
-	{
-		/*pai*/
-		printf("PID do filho: %d\n", fid);
-		printf("Nova prioridade passada como argumento: %d\n", novaPri);
-		printf("Resultado da syscall: %d\n", setpriority_ep(fid, novaPri));
-	}
-	else
-	{
-		/*filho*/
-		sleep(60);
-	}
+    printf("Resultado do lsr: %d\n", result);
 
-	return 0;
+    result = open(hue, 01024, 0666);
+    
+    printf("OLHA SO %d\n", result);
+
+    return 0;
 }
