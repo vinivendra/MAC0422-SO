@@ -1,0 +1,38 @@
+\documentclass[11pt]{article}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc} %Deixa eu colocar letras com ascentos
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{graphicx}
+
+
+\title{Relatório - EP 4 \\ Sistemas Operacionais}
+
+
+
+\begin{document}
+    \maketitle
+
+    \begin{itemize}
+        \item Victor Sanches Portella - Nº USP: 7991152
+        \item Vinícius Jorge Vendramini - Nº USP: 7991103
+    \end{itemize}
+
+
+    \section*{Parte 2 - Verificação de Arquivos}
+    A parte 2 foi implementada com o uso de uma syscall nova, a \textit{lsr}. Para chamá-la, basta passar o caminho para o arquivo (absoluto ou relativo) em uma string. Ela faz exatamente o que foi pedido: lista todos os processos que estão usando este arquivo, lista os blocos (vini: diretos e indiretos??) em que o arquivo está contido e imprime uma mensagem de erro.
+
+    \section*{Parte 1 - Implementação de arquivos imediatos}
+    A parte de implementar arquivos imediatos não foi completa, mas a estrutura geral está presente. A maior parte do código relacionado a isso está nos arquivos open.c e read.c, apesar de existirem outros arquivos pouco modificados também.
+
+    Quando se cria um arquivo, ele é criado inicialmente como imediato. Sempre que vamos fazer uma escrita, escrevemos no próprio iNode - a não ser que isso faça o arquivo ultrapassar 32 bytes. Nesse caso, copiamos o que está no iNode para um bloco separado (transformando então o arquivo em um arquivo normal) e então escrevemos o que precisávamos no arquivo normalmente. Para a leitura, checamos se o arquivo é imediato ou não. Se for, lemos do iNode, se não, dos blocos.
+
+    Para saber se um arquivo é ou não imediato, optamos por adicionar uma flag I\_IMMEDIATE análoga a outras flags do sistema, como a I\_REGULAR. O valor da flag foi escolhido de modo a não interferir com o resto do sistema e, com isso, acabamos por não gastar nenhum espaço a mais no iNode.
+
+    Além disso, criamos também uma flag O\_CREATI que usamos para criar arquivos imediatos na mão ao fazer uma chamada direta para a syscall \textit{open} (declarada no arquivo \textit{fcntl.h}) que ficaria (por exemplo) da forma \textbf{open("path/to/file", 01024, 0666)}, onde 01024 é o valor da flag em si e 0666 são as permissões do arquivo. (vini: talvez seja bom deixar um teste com uma chamada para essa syscall).
+
+    \section*{Observações}
+    Existe(m) arquivo(s) teste criado(s) durante o desenvolvimento que podem ser acessados na pasta /usr/src/EP4\-Testes. Um deles chama a lsr no arquivo teste.c, presente na mesma pasta. Para ver a função é necessário que o arquivo esteja aberto, o que pode ser feito (por exemplo) abrindo ele no vi ou no emacs em outra aba do Minix. O outro arquivo serve para testar diferentes operações com arquivos imediatos.
+
+\end{document}
