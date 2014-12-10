@@ -319,8 +319,11 @@ char *filename;
   block_t b = 0;
   struct buf bp;
   off_t size;
+/* ###################################### */
 
-  if (nofiles && (ip->d1_mode & I_TYPE) == I_REGULAR) return(0);
+  if (nofiles && ((ip->d1_mode & I_TYPE) == I_REGULAR || (ip->d1_mode & I_TYPE) == I_IMMEDIATE )) return(0);
+
+/* ###################################### */
 
   if (verbose) show_info(filename, ip, pathname);
 
@@ -345,6 +348,10 @@ char *filename;
 			close(file);
 			return(-1);
 		}
+    /* ############################## */
+
+
+    /* ############################### */
 
 		/* Write it to the file */
 		if (size > (off_t) BLOCK_SIZE)

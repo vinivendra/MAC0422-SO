@@ -34,12 +34,12 @@
 
 /* Oflag values for open().  POSIX Table 6-4. */
 /*#####################################################################*/
-#define O_CREATI       01024	/* creat immediate file if it doesn't exist */
+#define O_CREATI      010000	/* creat immediate file if it doesn't exist */
 /*#####################################################################*/
-#define O_CREAT        00100	/* creat file if it doesn't exist */
-#define O_EXCL         00200	/* exclusive use flag */
-#define O_NOCTTY       00400	/* do not assign a controlling terminal */
-#define O_TRUNC        01000	/* truncate flag */
+#define O_CREAT       000100	/* creat file if it doesn't exist */
+#define O_EXCL        000200	/* exclusive use flag */
+#define O_NOCTTY      000400	/* do not assign a controlling terminal */
+#define O_TRUNC       001000	/* truncate flag */
 
 /* File status flags for open() and fcntl().  POSIX Table 6-5. */
 #define O_APPEND       02000	/* set append mode */
