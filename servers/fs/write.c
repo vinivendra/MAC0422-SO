@@ -45,6 +45,13 @@ zone_t new_zone;		/* zone # to be inserted */
   long excess, zone;
   struct buf *bp;
 
+  /* ############################################################################### */
+  if ((rip->i_mode & I_TYPE) == I_IMMEDIATE) {
+      return NO_BLOCK;
+  }
+  /* ############################################################################### */
+    
+    
   rip->i_dirt = DIRTY;		/* inode will be changed */
   bp = NIL_BUF;
   scale = rip->i_sp->s_log_zone_size;		/* for zone-block conversion */

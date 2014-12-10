@@ -100,8 +100,10 @@ PRIVATE int select_request_file(struct filp *f, int *ops, int block)
  *===========================================================================*/
 PRIVATE int select_match_file(struct filp *file)
 {
-	if (file && file->filp_ino && (file->filp_ino->i_mode & I_REGULAR))
+    /* ############################################################################### */
+	if (file && file->filp_ino && (file->filp_ino->i_mode & (I_REGULAR | I_IMMEDIATE)))
 		return 1;
+    /* ############################################################################### */
 	return 0;
 }
 

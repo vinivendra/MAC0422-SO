@@ -16,7 +16,7 @@ int flags;
   message m;
 
   va_start(argp, flags);
-  if (flags & O_CREAT) {
+  if (flags & O_CREAT || flags & O_CREATI) {
 	m.m1_i1 = strlen(name) + 1;
 	m.m1_i2 = flags;
 	m.m1_i3 = va_arg(argp, _mnx_Mode_t);

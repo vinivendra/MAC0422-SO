@@ -79,19 +79,6 @@ PUBLIC int do_set_best_fit_ep()
     return 0;
 }
 
-
-/*===========================================================================*
- *				get_proc_info_ep 			     *
- *===========================================================================*/
-
-
-PUBLIC int do_get_proc_info_ep()
-{
-    printf("INFORMACAO É O CARALHO NÃO VOU RETORNAR PORRA NENHUMA SIFUDE BANDIPUTO :v <(\") AMO VCS\n");
-    
-    return 0;
-}
-
 /*################################################*/
 
 

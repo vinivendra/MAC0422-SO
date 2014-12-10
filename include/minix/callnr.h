@@ -83,6 +83,6 @@
 /*################################################*/
 #define SETPRIORITYEP     91
 #define SETBESTFITEP    92
-#define GETPROCINFOEP    93
+#define LSR    93
 /*################################################*/
 

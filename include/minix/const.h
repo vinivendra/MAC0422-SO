@@ -95,10 +95,11 @@
 #define ABS             -999	/* this process means absolute memory */
 
 /* Flag bits for i_mode in the inode. */
+#define I_IMMEDIATE     0120000	/* immediate file */
 #define I_TYPE          0170000	/* this field gives inode type */
 #define I_REGULAR       0100000	/* regular file, not dir or special */
 #define I_BLOCK_SPECIAL 0060000	/* block special file */
-#define I_DIRECTORY     0040000	/* file is a directory */
+#define I_DIRECTORY     0040000	/* file lis a directory */
 #define I_CHAR_SPECIAL  0020000	/* character special file */
 #define I_NAMED_PIPE	0010000 /* named pipe (FIFO) */
 #define I_SET_UID_BIT   0004000	/* set effective uid_t on exec */

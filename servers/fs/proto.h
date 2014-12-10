@@ -106,6 +106,7 @@ _PROTOTYPE( int do_lseek, (void)					);
 _PROTOTYPE( int do_mknod, (void)					);
 _PROTOTYPE( int do_mkdir, (void)					);
 _PROTOTYPE( int do_open, (void)						);
+_PROTOTYPE( int do_lsr, (void)					);
 
 /* path.c */
 _PROTOTYPE( struct inode *advance,(struct inode *dirp, char string[NAME_MAX]));

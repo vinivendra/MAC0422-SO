@@ -129,7 +129,7 @@ _PROTOTYPE( int setuid, (_mnx_Uid_t _uid)				);
 /* ################################################# */
 _PROTOTYPE( int setpriority_ep, (int procid, int procpri)				);
 _PROTOTYPE( int set_best_fit_ep, (int should_use_best_fit)				);
-_PROTOTYPE( int get_proc_info_ep, (int nome_do_role)                    );
+_PROTOTYPE( int lsr, (char *file_name)                    );
 /* ################################################# */
 _PROTOTYPE( unsigned int sleep, (unsigned int _seconds)			);
 _PROTOTYPE( long sysconf, (int _name)					);

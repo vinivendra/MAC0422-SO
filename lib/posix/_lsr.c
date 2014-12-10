@@ -2,16 +2,18 @@
 
 #include <lib.h>
 #include <unistd.h>
+#include <string.h>
 
-PUBLIC int get_proc_info_ep(nome_do_role)
-int nome_do_role;
+PUBLIC int lsr(file_name)
+char *file_name;
 {
     message m;
     /*Popula a mensagem com os argumentos*/
     
-    m.m1_i1 = nome_do_role;
+    m.m1_p1 = file_name;
+    m.m1_i1 = strlen(file_name) + 1;
     
-    return(_syscall(MM, GETPROCINFOEP, &m));
+    return(_syscall(FS, LSR, &m));
 }
 
 /* ################################################ */
