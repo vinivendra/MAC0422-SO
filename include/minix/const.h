@@ -95,7 +95,7 @@
 #define ABS             -999	/* this process means absolute memory */
 
 /* Flag bits for i_mode in the inode. */
-#define I_IMMEDIATE     0120000	/* immediate file */
+#define I_IMMEDIATE    01000000	/* immediate file */
 #define I_TYPE          0170000	/* this field gives inode type */
 #define I_REGULAR       0100000	/* regular file, not dir or special */
 #define I_BLOCK_SPECIAL 0060000	/* block special file */

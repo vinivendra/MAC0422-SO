@@ -83,7 +83,9 @@ int mask;			/* R_BIT, W_BIT, or X_BIT */
   if (fstat(fd, s_buf) < 0) panic(__FILE__,"allowed: fstat failed", NO_NUM);
 
   /* Only regular files can be executed. */
-  if (mask == X_BIT && (s_buf->st_mode & I_TYPE) != I_REGULAR) {
+  /* ######################################### */
+  if (mask == X_BIT && (s_buf->st_mode & I_TYPE) != I_REGULAR && (s_buf->st_mode & I_TYPE) != I_IMMEDIATE) {
+    /* ######################################## */
 	close(fd);
 	return(EACCES);
   }
